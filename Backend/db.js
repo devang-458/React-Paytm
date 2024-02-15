@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const { number } = require("zod");
-mongoose.connect("")
+mongoose.connect("mongodb+srv://devang:devang@cluster0.dxtdpjn.mongodb.net/paytm")
+const bcrypt = require("bcrypt")
+
 
 // const userSchema = mongoose.Schema({
 //     firstName: String,
@@ -36,11 +38,37 @@ const userSchema = new mongoose.Schema({
         trim: true,
         maxlength: 50
     }
-
 })
 
+const { default: mongoose } = require("mongoose");
+
+const accountSchema = mongoose.Schema({
+    userId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
+    balance: {
+        type: Number,
+        required: true
+    }
+})
+
+
+userSchema.methods.createHash = async function(plainTextPassword){
+    const saltRound = 10;
+    const salt = await bcrypt.genSalt(saltRound);
+    return await bcrypt.hash(plainTextPassword, salt)
+};
+
+userSchema.methods.validatePassword = async function (candidatePassword){
+    return await bcrypt.compare(candidatePassword, this.password)
+}
+
+const Account = mongoose.model("Account", accountSchema)
 const User = mongoose.Model("User", userSchema)
 
 module.exports = {
-    User
+    User,
+    Account
 }
