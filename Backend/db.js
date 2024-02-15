@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const { default: mongoose } = require("mongoose");
 const { number } = require("zod");
 mongoose.connect("")
 const bcrypt = require("bcrypt")
@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-const { default: mongoose } = require("mongoose");
+
 
 const accountSchema = mongoose.Schema({
     userId:{
@@ -66,7 +66,7 @@ userSchema.methods.validatePassword = async function (candidatePassword){
 }
 
 const Account = mongoose.model("Account", accountSchema)
-const User = mongoose.Model("User", userSchema)
+const User = mongoose.model("User", userSchema)
 
 module.exports = {
     User,
