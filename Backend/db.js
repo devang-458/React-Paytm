@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { number } = require("zod");
-mongoose.connect("mongodb+srv://devang:devang@cluster0.dxtdpjn.mongodb.net/paytm")
+mongoose.connect("")
 const bcrypt = require("bcrypt")
 
 
