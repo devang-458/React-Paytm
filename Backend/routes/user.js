@@ -4,6 +4,7 @@ const { User, Account } = require('../db')
 const router = express.Router()
 const jwt = require("jsonwebtoken")
 const { JWT_SECRET } = require('../conifg')
+const bcrypt = require("bcrypt")
 const { authMiddleware } = require('./middleware')
 
 
@@ -21,7 +22,7 @@ router.post("/signup",async (req,res)=>{
     const {success,data} = signupSchema.safeParse(req.body);
     if(!success){
         return res.status(411).json({
-            msg: "Email is already Taken/ Incorrect inputs"
+            msg: "Email is already Taken/ Incorrect Input"
         })
     }
 
@@ -31,15 +32,15 @@ router.post("/signup",async (req,res)=>{
         username: body.username
     })
 
-    if(user._id){
+    if(user && user._id){
         return res.status(411).json({
-            message: "Email is already Taken/ Incorrect inputs"
+            message: "User already exist"
         })
     }
     const dbUser = await User.create(body)
 
     await Account.create({
-        userId,
+        userId: dbUser._id,
         balance: 1 + Math.random() * 10000
 
     })
