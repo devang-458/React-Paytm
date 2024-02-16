@@ -1,7 +1,6 @@
 const { default: mongoose } = require("mongoose");
-const { number } = require("zod");
 mongoose.connect("")
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
 
 
 // const userSchema = mongoose.Schema({
@@ -26,13 +25,13 @@ const userSchema = new mongoose.Schema({
         required: true,
         minLength: 6
     },
-    firstname: {
+    firstName: {
         type: String,
         required: true,
         trim: true,
         maxLength: 50
     },
-    lastname: {
+    lastName: {
         type: String,
         required: true,
         trim: true,
@@ -53,7 +52,6 @@ const accountSchema = mongoose.Schema({
         required: true
     }
 })
-
 
 userSchema.methods.createHash = async function(plainTextPassword){
     const saltRound = 10;

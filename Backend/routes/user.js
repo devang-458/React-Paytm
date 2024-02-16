@@ -52,7 +52,8 @@ router.post("/signup", async (req, res) => {
 
     res.json({
         message: "User created successfully",
-        token: token
+        token: token,
+        userId: userId
     })
 })
 
@@ -139,6 +140,33 @@ router.get("/bulk", async (req, res) => {
             _id: user._id
         }))
     })
+})
+
+router.get("/" , authMiddleware , async (req,res) => {
+    try{
+        const users = await User.find();
+        const userWithBalance = await Promise.all(users.map(async (user) => {
+            const account = await Account.findOne({
+                userId: user._id
+            })
+            return {
+                username: user.username,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                _id: user._id,
+                balance: account ? account.balance : 0
+            }
+        }))
+
+        res.json({
+            users: userWithBalance
+        });
+
+    }catch(err){
+        res.json({
+            msg:"Internal server Error"
+        })
+    }
 })
 
 module.exports = router;
