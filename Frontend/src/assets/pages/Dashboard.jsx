@@ -8,6 +8,7 @@ export const DashBoard = () => {
 
     const [balance, setBalance] = useState(null)
     const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token")
     const [users, setUsers] = useState([])
     const [filter, setFilter] =useState("")
 
@@ -40,11 +41,11 @@ export const DashBoard = () => {
             }
         }
 
-        if(userId){
+        if(userId,token){
             fetchBalance();
             fetchUser();
         }
-    },[userId])
+    },[userId,token])
 
 
     return <div>

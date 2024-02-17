@@ -29,6 +29,7 @@ export const SendMoney = () => {
             })
 
             console.log("Transfer successfully",response.data)
+            alert(amount +" Money Sent ")
         }catch(err){
             console.log(err)
         }
