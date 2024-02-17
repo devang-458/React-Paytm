@@ -33,7 +33,7 @@ export const Signup = () => {
                 setUsername(e.target.value)
             }}   label={"Email:-"} placeholder={"titans@gmail.com"}/>
             
-            <PasswordInput />
+            <PasswordInput setPassword={setPassword}/>
             
             <Button onClick={async () => {
             const response = await axios.post("http://localhost:3000/api/v1/user/signup",{
