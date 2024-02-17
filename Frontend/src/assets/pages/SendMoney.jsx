@@ -29,7 +29,11 @@ export const SendMoney = () => {
             })
 
             console.log("Transfer successfully",response.data)
-            alert(amount +" Money Sent ")
+            
+            setTimeout(() => {
+                alert(amount +" Money Sent ")
+                Navigate("/dashboard")
+            }, 3000);
         }catch(err){
             console.log(err)
         }

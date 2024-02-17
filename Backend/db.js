@@ -59,6 +59,13 @@ userSchema.methods.createHash = async function(plainTextPassword){
     return await bcrypt.hash(plainTextPassword, salt)
 };
 
+userSchema.pre("save",async function(next){
+    if(this.isModified("password")){
+        this.password = await this.createHash(this.password)
+    }
+    next();
+})
+
 userSchema.methods.validatePassword = async function (candidatePassword){
     return await bcrypt.compare(candidatePassword, this.password)
 }

@@ -6,6 +6,7 @@ import { InputBox } from "../Components/InputBox";
 import { SubHeading } from "../Components/SubHeading";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
+import PasswordInput from "../Components/Password";
 
 export const Signup = () => {
 
@@ -32,9 +33,7 @@ export const Signup = () => {
                 setUsername(e.target.value)
             }}   label={"Email:-"} placeholder={"titans@gmail.com"}/>
             
-            <InputBox  onChange={e=>{
-                setPassword(e.target.value)
-            }}    label={"Password:-"} placeholder={"********"}/>
+            <PasswordInput />
             
             <Button onClick={async () => {
             const response = await axios.post("http://localhost:3000/api/v1/user/signup",{
