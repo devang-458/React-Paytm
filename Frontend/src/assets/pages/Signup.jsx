@@ -15,9 +15,9 @@ export const Signup = () => {
     const [username,setUsername] = useState("")
     const Navigate = useNavigate();
 
-    return <div className="flex justify-center bg-slate-300 h-screen">
+    return <div className="flex justify-center  bg-slate-300 h-screen ">
         <div className="flex flex-col justify-center">
-            <div className="bg-white rounded-lg text-center w-80 p-2 px-2 h-max ">
+            <div className="bg-white rounded-lg  text-center w-96 p-2 h-max px-5 py-5 ">
             <Heading label={"Sign up"}/>
             <SubHeading label={" write your information here "}/>
             <InputBox onChange={e=>{

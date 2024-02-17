@@ -73,10 +73,9 @@ router.post("/signin", async (req, res) => {
 
     const user = await User.findOne({
         username: req.body.username,
-        password: req.body.password
     });
 
-    if (user) {
+    if (user && user.password === req.body.password) {
         const token = jwt.sign({
             userId: user._id
         }, JWT_SECRET);
@@ -101,7 +100,8 @@ const updateBody = zod.object({
 })
 
 router.put("/", authMiddleware, async (req, res) => {
-    const { success } = updateBody.safeParse(req.body)
+    try{
+        const { success } = updateBody.safeParse(req.body)
     if (!success) {
         res.status(411).json({
             message: "Error while updating information"
@@ -115,6 +115,12 @@ router.put("/", authMiddleware, async (req, res) => {
     res.json({
         message: "Updated successfully"
     })
+    }
+    catch(err){
+        res.status(500).json({
+            msg: err
+        })
+    }
 })
 
 router.get("/bulk", async (req, res) => {
@@ -142,31 +148,5 @@ router.get("/bulk", async (req, res) => {
     })
 })
 
-router.get("/" , authMiddleware , async (req,res) => {
-    try{
-        const users = await User.find();
-        const userWithBalance = await Promise.all(users.map(async (user) => {
-            const account = await Account.findOne({
-                userId: user._id
-            })
-            return {
-                username: user.username,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                _id: user._id,
-                balance: account ? account.balance : 0
-            }
-        }))
-
-        res.json({
-            users: userWithBalance
-        });
-
-    }catch(err){
-        res.json({
-            msg:"Internal server Error"
-        })
-    }
-})
 
 module.exports = router;

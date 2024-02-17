@@ -8,6 +8,8 @@ export const DashBoard = () => {
 
     const [balance, setBalance] = useState(null)
     const userId = localStorage.getItem("userId");
+    const [users, setUsers] = useState([])
+    const [filter, setFilter] =useState("")
 
     useEffect( () => {
         const fetchBalance = async () => {
@@ -24,9 +26,23 @@ export const DashBoard = () => {
             }catch(err){
                 console.log("Error fetching balance:", err )
             }
+        };
+
+        const fetchUser = async () => {
+            try{
+                const response = await axios.get("http://localhost:3000/api/v1/user/bulk");
+                const userData = response.data.user
+                const filteredUser = userData.filter(user => user.id !== userId)
+                setUsers(filteredUser)
+
+            }catch(err){
+                console.log("Error fetching users:" , err)
+            }
         }
+
         if(userId){
-            fetchBalance()
+            fetchBalance();
+            fetchUser();
         }
     },[userId])
 
