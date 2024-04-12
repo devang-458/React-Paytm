@@ -1,5 +1,5 @@
 const { default: mongoose } = require("mongoose");
-mongoose.connect("mongodb+srv://devang458:devang@cluster0.vrc5thb.mongodb.net/paytm")
+mongoose.connect("mongodb+srv://devang:devang@cluster0.wgpaugl.mongodb.net/")
 const bcrypt = require("bcrypt");
 
 
