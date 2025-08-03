@@ -79,7 +79,7 @@ export const Signup = () => {
         login(response.data.user, response.data.token);
 
         toast.success("Account created successfully!");
-        navigate("/dashboard");
+        navigate("/signin");
       }
     } catch (error) {
       const message =
