@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "dev": "cd Backend/ && node index.js && cd ../Frontend/ && npm run dev "
+  },
   "dependencies": {
     "axios": "^1.6.7"
   }

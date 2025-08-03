@@ -1,8 +1,12 @@
 const express = require("express");
 const mainRouter = require("./routes/index");
 const cors = require('cors');
-const app = express();
 const jwt = require("jsonwebtoken")
+const dotenv = require("dotenv")
+
+dotenv.config()
+
+const app = express();
 const url = process.env.MONGO_URL
 console.log(url)
 
