@@ -1,59 +1,64 @@
-import { useState, useEffect } from "react"
-import { Appbar } from "../Components/Appbar"
-import { Balance } from "../Components/Balance"
-import { Users } from "../Components/Users"
-import axios from "axios"
+import { useState, useEffect } from "react";
+import { Appbar } from "../Components/Appbar";
+import { Balance } from "../Components/Balance";
+import { Users } from "../Components/Users";
+import axios from "axios";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const DashBoard = () => {
+  const [balance, setBalance] = useState(null);
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
+  const [users, setUsers] = useState([]);
+  const [filter, setFilter] = useState("");
+  const API_URL = process.env.API_URL;
 
-    const [balance, setBalance] = useState(null)
-    const userId = localStorage.getItem("userId");
-    const token = localStorage.getItem("token")
-    const [users, setUsers] = useState([])
-    const [filter, setFilter] =useState("")
+  useEffect(() => {
+    const fetchBalance = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(`${API_URL}/api/v1/account/balance`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const balanceValue = response.data.balance;
+        setBalance(balanceValue);
+      } catch (err) {
+        console.log("Error fetching balance:", err);
+      }
+    };
 
-    useEffect( () => {
-        const fetchBalance = async () => {
-            
-            try{
-                const token = localStorage.getItem("token")
-                const response = await axios.get("http://localhost:3000/api/v1/account/balance",{
-                    headers:{
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                const balanceValue = response.data.balance
-                setBalance(balanceValue)
-            }catch(err){
-                console.log("Error fetching balance:", err )
-            }
-        };
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/api/v1/user/bulk`);
+        const userData = response.data.user;
+        const filteredUser = userData.filter((user) => user.id !== userId);
+        setUsers(filteredUser);
+      } catch (err) {
+        console.log("Error fetching users:", err);
+      }
+    };
 
-        const fetchUser = async () => {
-            try{
-                const response = await axios.get("http://localhost:3000/api/v1/user/bulk");
-                const userData = response.data.user
-                const filteredUser = userData.filter(user => user.id !== userId)
-                setUsers(filteredUser)
+    if ((userId, token)) {
+      fetchBalance();
+      fetchUser();
+    }
+  }, [userId, token]);
 
-            }catch(err){
-                console.log("Error fetching users:" , err)
-            }
-        }
-
-        if(userId,token){
-            fetchBalance();
-            fetchUser();
-        }
-    },[userId,token])
-
-
-    return <div>
-        <Appbar />
-        <div className="m-8">
-            {balance !== null ? <Balance value={balance}/> : <p> Loading Balance....</p>}
-            <Users />
-        </div>
-        
+  return (
+    <div>
+      <Appbar />
+      <div className="m-8">
+        {balance !== null ? (
+          <Balance value={balance} />
+        ) : (
+          <p> Loading Balance....</p>
+        )}
+        <Users />
+      </div>
     </div>
-}
+  );
+};
