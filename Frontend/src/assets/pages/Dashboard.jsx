@@ -84,9 +84,8 @@ export const Dashboard = () => {
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-indigo-600">
-                PayTM Clone
-              </h1>
+              <img src="/credify.png" alt="Credify Logo" className="object-contain w-auto h-12"/>
+              <h1 className="text-2xl font-bold text-indigo-600">Credify</h1>
             </div>
             <div className="flex items-center space-x-4">
               <button
