@@ -11,21 +11,21 @@ export const Users = () => {
 
 
     useEffect (()=>{
-        axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter)
+        axios.get(`${API_URL}/api/v1/user/bulk?filter=` + filter)
         .then(response => {
             setUsers(response.data.user)
         })
     },[filter])
 
-    return <div className="pt-6 bg-slate-200 rounded m-4 p-4 shadow-xl">
-        <div className="  font-bold ">
+    return <div className="p-4 pt-6 m-4 rounded shadow-xl bg-slate-200">
+        <div className="font-bold ">
             Users :
         </div>
         <div className="pt-2">
             <input onChange={e => {
                 const value = e.target.value;
                 setFilter(value)
-            }} placeholder="Search users..." type="text" className="w-full rounded py-2 px-2"></input>
+            }} placeholder="Search users..." type="text" className="w-full px-2 py-2 rounded"></input>
         </div>
         <div>
             {users.map(user => <User key={user._id} user={user} />)}
@@ -46,8 +46,8 @@ const User = ({user}) => {
 
     return <div className="flex justify-between mt-3">
         <div className="flex">
-            <div className="bg-slate-300 rounded-full h-12 w-12 flex justify-center mt-1 mr-2">
-                <div className="flex flex-col justify-center text-lg h-full font-bold">
+            <div className="flex justify-center w-12 h-12 mt-1 mr-2 rounded-full bg-slate-300">
+                <div className="flex flex-col justify-center h-full text-lg font-bold">
                     {user.firstName ? user.firstName[0] : ''}
                 </div>
             </div>
