@@ -3,9 +3,7 @@ import { Appbar } from "../Components/Appbar";
 import { Balance } from "../Components/Balance";
 import { Users } from "../Components/Users";
 import axios from "axios";
-import dotenv from "dotenv";
-
-dotenv.config();
+import { useNavigate } from "react-router-dom";
 
 export const DashBoard = () => {
   const [balance, setBalance] = useState(null);
@@ -13,8 +11,9 @@ export const DashBoard = () => {
   const token = localStorage.getItem("token");
   const [users, setUsers] = useState([]);
   const [filter, setFilter] = useState("");
-  const API_URL = process.env.API_URL;
+  const Navigate = useNavigate();
 
+  const API_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchBalance = async () => {
       try {

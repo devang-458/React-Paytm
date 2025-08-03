@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { Heading } from "../Components/Heading";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import dotenv from "dotenv";
 
-dotenv.config();
 
 export const SendMoney = () => {
   const [searchParams] = useSearchParams();
@@ -12,7 +10,8 @@ export const SendMoney = () => {
   const name = searchParams.get("name");
   const [amount, setAmount] = useState(0);
   const Navigate = useNavigate();
-  const API_URL = process.env.API_URL;
+
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     console.log("User ID:", id);

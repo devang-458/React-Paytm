@@ -7,9 +7,7 @@ import { SubHeading } from "../Components/SubHeading";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import PasswordInput from "../Components/Password";
-import dotenv from "dotenv";
 
-dotenv.config();
 
 export const Signup = () => {
   const [firstName, setFirstName] = useState("");
@@ -17,8 +15,8 @@ export const Signup = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const Navigate = useNavigate();
-  const API_URL = process.env.API_URL;
 
+  const API_URL = import.meta.env.VITE_API_URL;
   return (
     <div className="flex justify-center h-screen bg-slate-300 ">
       <div className="flex flex-col justify-center">

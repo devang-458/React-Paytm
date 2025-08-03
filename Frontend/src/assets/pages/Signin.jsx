@@ -6,16 +6,13 @@ import { InputBox } from "../Components/InputBox";
 import { SubHeading } from "../Components/SubHeading";
 import axios from "axios";
 import { useState } from "react";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 export const Signin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const Navigate = useNavigate();
-  const API_URL = process.env.API_URL;
 
+  const API_URL = import.meta.env.VITE_API_URL;
   return (
     <div className="flex justify-center h-screen bg-slate-300">
       <div className="flex flex-col justify-center">
